@@ -13,28 +13,42 @@ require_relative "remind/calendar"
 module Remind
   class Error < StandardError; end
   @@REM = REM['reminders']
-  def self.make x, u, *i
-    r = REM[x]
-    r.clear!
+  @@INIT = []
+  @@URL = []
+  def self.init h={}
+    @@INIT << h
+  end
+  
+  def self.url u
+    @@URL << u
+  end
+  
+  def self.rebuild!
     @@REM.clear!
-    [i].flatten.each do |x|
-      r[x[:what]].attr = { date: x[:when] }
+    [@@INIT].flatten.each do |x|
       @@REM[x[:what]].attr = { date: x[:when] }
     end
-    if ENV.has_key? 'ICS'
-      CAL.from_url(ENV['ICS']).each do |e|
+    @@URL.each do |u|
+      CAL.from_url(u).each do |e|
+        d = e.when[:begin].to_time.localtime.strftime("%Y/%m/%d-%R")
         h = {
           date: e.when[:begin].to_time.localtime.strftime("%-d %b %Y"),
           hour: e.when[:begin].to_time.localtime.strftime("%k"),
           minute: e.when[:begin].to_time.localtime.strftime("%M"),
           at: e.where,
           type: e.who,
-          lead: 30
+          lead: 1
         }
-        r[e.what].attr = h
-        @@REM[e.what].attr = h
+        k = %[#{e.what} #{h[:type]} #{d}]
+        @@REM[k].attr = h
       end
     end
+  end
+
+  def self.remote x, u
+    r = REM[x]
+    r.clear!
+    Remind.rebuild!
     CAL.from_url(u).each do |e|
       d = e.when[:begin].to_time.localtime.strftime("%Y/%m/%d-%R")
       h = {
@@ -54,10 +68,13 @@ module Remind
     @@REM.to_rem!
     return nil
   end
+  
   def self.[] k
     REM[k].agenda[1..-1]
   end
+
   def self.all
+    @@REM.to_rem!
     @@REM.agenda[1..-1]
   end
 end
