@@ -2,8 +2,8 @@
 class E 
   def initialize k
     @id = k
-    @rem = []
     @r = Hash.new { |h,k| h[k] = R.new(k) }
+    clear!
   end
   def id; @id; end
   
@@ -16,6 +16,10 @@ class E
     `remind -t1 rem/#{@id}.rem`.split("\n\n")
   end
 
+  def clear!
+    @red = []
+  end
+  
   def to_rem
     a = [];
     @rem.each { |e| a << @r[e].to_rem }
