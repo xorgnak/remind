@@ -1,0 +1,28 @@
+PATH
+  remote: .
+  specs:
+    remind (0.1.0)
+      faraday
+      icalendar
+
+GEM
+  remote: https://rubygems.org/
+  specs:
+    faraday (2.9.0)
+      faraday-net_http (>= 2.0, < 3.2)
+    faraday-net_http (3.0.2)
+    icalendar (2.10.1)
+      ice_cube (~> 0.16)
+    ice_cube (0.16.4)
+    rake (13.1.0)
+
+PLATFORMS
+  ruby
+  x86_64-linux
+
+DEPENDENCIES
+  rake (~> 13.0)
+  remind!
+
+BUNDLED WITH
+   2.5.4
