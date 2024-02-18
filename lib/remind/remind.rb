@@ -45,12 +45,9 @@ class R
   end
   
   def id; @id; end
-  
+
   def to_rem
     a, i = [], [ @id ]
-    if @attr.has_key? :type
-      i << %[#{@attr[:type]}]
-    end
     if @attr.has_key? :date
       a << %[#{@attr[:date]}]
       if @attr.has_key? :lead
@@ -76,7 +73,7 @@ class R
     if @attr.has_key? :at
       i << %[at #{@attr[:at]}]
     end
-    return %[REM #{a.join(" ")} MSG %b %2 #{i.join(" ")}]
+    return %[REM #{a.join(" ")} MSG #{i.join(" ")}]
   end
 end
 
