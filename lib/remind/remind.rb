@@ -17,7 +17,7 @@ class E
   end
 
   def clear!
-    @red = []
+    @rem = []
   end
   
   def to_rem

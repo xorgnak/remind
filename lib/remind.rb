@@ -15,6 +15,8 @@ module Remind
   @@REM = REM['reminders']
   def self.[]= x, u
     r = REM[x]
+    r.clear!
+    @@REM.clear!
     CAL.from_url(u).each do |e|
       h = {
         date: e.when[:begin].to_time.localtime.strftime("%-d %b %Y"),

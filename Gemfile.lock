@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    remind (0.1.0)
+    gnu-remind (0.1.2)
       faraday
       icalendar
 
@@ -21,8 +21,8 @@ PLATFORMS
   x86_64-linux
 
 DEPENDENCIES
+  gnu-remind!
   rake (~> 13.0)
-  remind!
 
 BUNDLED WITH
    2.5.4
