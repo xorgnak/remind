@@ -1,9 +1,10 @@
 PATH
   remote: .
   specs:
-    gnu-remind (0.1.4)
+    gnu-remind (0.1.5)
       faraday
       icalendar
+      nickel
 
 GEM
   remote: https://rubygems.org/
@@ -14,6 +15,7 @@ GEM
     icalendar (2.10.1)
       ice_cube (~> 0.16)
     ice_cube (0.16.4)
+    nickel (0.1.6)
     rake (13.1.0)
 
 PLATFORMS
