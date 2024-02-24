@@ -1,5 +1,9 @@
+# Event Processor
 module EVENT
+
+  # Event object.
   class E
+    # Event +i+.
     def initialize i
       @event = Nickel.parse i
       puts %[EVENT::E: #{@event}]
@@ -10,6 +14,7 @@ module EVENT
         @message = i
       end
     end
+    # is event?
     def event?
       if %[#{@event.message}].length > 0 && @event.occurrences.length > 0
         return true
@@ -17,6 +22,7 @@ module EVENT
         return false
       end
     end
+    # each event occourence 
     def each &b
       @event.occurrences.each { |e|
         h = {
@@ -31,6 +37,7 @@ module EVENT
       return nil
     end
   end
+  # Process event.
   def self.[] k
     E.new(k)
   end

@@ -24,59 +24,24 @@ gem build remind.gemspec
 require 'remind'
 ```
 ### Remind
-Use as a generic reminder handler.
+A wapper around gnu remind.
 
-#### set
+#### Set Reminders Collection
 Create local reminders from url.
 ```
-Remind['key'] = %[https://example.ics]
+Remind.set(collection, "Binner at 8 tonight.")
 ```
 
-#### get
+#### Get Reminders Collection
 Extract agenda from local reminders.
 ```
-Remind['key']
+Remind.get(collection)
 ```
 
-#### all
+#### Get System Reminders
 ```
-Remind.all
+Remind.get!
 ```
-
-
-### REM
-Use as a task specific tool
-
-#### collection
-```
-REM['collection']
-```
-
-#### entry
-```
-REM['collection']['entry']
-```
-
-#### entry attributes
-```
-REM['collection']['entry'].attr = { type: "event type", date: "1 Jan 1970", lead: 7, repeat: 4, hour: "22", minute: "45", duration: "1:45", at: "Place Name" }
-```
-
-#### entry reminder
-```
-REM['collection'].to_rem
-```
-
-#### save collection
-```
-REM['collection'].to_rem!
-```
-
-#### collection agenda
-```
-REM['collection'].agenda
-```
-
 
 ## Development
 You can also run `ruby bin/console` for an interactive prompt that will allow you to experiment.

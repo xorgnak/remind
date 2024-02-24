@@ -16,27 +16,32 @@ require_relative "remind/calendar"
 
 require_relative "remind/event"
 
+# The Remind wrapper.
 module Remind
+  # generic errors
   class Error < StandardError; end
 
   @@REM = REM['reminders']
   
   @@INIT = []
-  def self.init h={}
+  # Add system event.
+  # +h+ event hash
+  #  Remind.reminder what: "Sports ball vs. the other team.", when: "15 March 2024 AT 19:00"
+  def self.reminder h={}
     @@INIT << h
   end
   
   @@URL = []
+  # Add system ics url.
+  # +u+ the ics url
+  #  Remind.url "https://your_domain.ics"
   def self.url u
     @@URL << u
   end
-  
-  @@SRC = []
-  def self.src k
-    @@SRC << k
-  end
-  
-  def self.rebuild!
+
+  # Set system reminders
+  #  Remind.build!
+  def self.build!
     @@REM.clear!
     
     [@@INIT].flatten.each do |x|
@@ -56,8 +61,11 @@ module Remind
     
     @@REM.to_rem!
   end  
-  
-  def self.remind k, *src
+
+  # Set collection +k+ reminders.
+  # +src+ one or more input string to be processed.
+  #  Remind.set("collection", "Dinner tonight at 8.", ...)
+  def self.set k, *src
     REM[k].clear!
     [src].flatten.each do |e|
       EVENT[e].each do |ee|
@@ -67,11 +75,17 @@ module Remind
     REM[k].to_rem! append: true
   end
 
-  def self.get a, k
-    REM[k].get(a)[1..-1]
+  # Get reminders container +k+                                                                                                                                                                                          
+  # +h[:args]+ can be set to get other filters.
+  #  Remind.get("collection")
+  def self.get k, h={}
+    REM[k].get(h[:args] || '-t1')[1..-1]
   end
-  
-  def self.get! a
-    @@REM.get(a)[1..-1]
+  # Get system reminders
+  # Gets one week's agenda by default. 
+  # +h[:args]+ can be set to get other filters.
+  #  Remind.get!
+  def self.get! h={}
+    @@REM.get(h[:args] || '-t1')[1..-1]
   end
 end
