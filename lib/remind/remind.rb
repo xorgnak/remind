@@ -19,7 +19,10 @@ module REM
     end
 
     # get Reminder collection with arguments +a+.
-    def get a 
+    def get a
+      if !File.exist?("rem/#{@id}.rem")
+        File.open("rem/#{@id}.rem",'w') { |f| f.write(""); }
+      end
       `remind #{a} rem/#{@id}.rem`.split("\n\n")
     end
 

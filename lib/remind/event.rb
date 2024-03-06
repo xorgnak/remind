@@ -5,11 +5,11 @@ module EVENT
   class E
     # Event +i+.
     def initialize i
-      @event = Nickel.parse i
-      puts %[EVENT::E: #{@event}]
-      if event?
+      if @event = Nickel.parse i
+        puts %[EVENT event: #{@event}]
         @message = @event.message
       else
+        puts %[EVENT log]
         t = Time.now.utc
         @message = i
       end
