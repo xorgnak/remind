@@ -5,7 +5,7 @@ module EVENT
   class E
     # Event +i+.
     def initialize i
-      if @event = Nickel.parse i
+      if @event = Nickel.parse(i)
         puts %[EVENT event: #{@event}]
         @message = @event.message
       else
