@@ -76,8 +76,10 @@ module REM
       if @attr.has_key? :hour
         if @attr.has_key? :minute
           a << %[AT #{@attr[:hour]}:#{@attr[:minute]}]
+          i << %[#{@attr[:hour]}:#{@attr[:minute]}]
         else
           a << %[AT #{@attr[:hour]}:00]
+          i << %[#{@attr[:hour]}:00]
         end
       end
       return %[REM #{a.join(" ")} MSG #{i.join(" ")}\n]
