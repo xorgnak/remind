@@ -36,7 +36,7 @@ module EVENT
           h[:hour] = "00"
           h[:minute] = "00"
         end
-        puts %[each message: #{h}]
+#        puts %[each message: #{h}]
         b.call(h, e)
       }
       return nil
