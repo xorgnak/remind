@@ -5,4 +5,8 @@ set -vx
 
 bundle install
 
-# Do any other automated setup that you need to do here
+sudo cp -R ./ /usr/share/reminder
+
+sudo su -c "echo 'ruby /usr/share/reminder/bin/remind \$*' > /usr/bin/reminder && chmod +x /usr/bin/reminder"
+
+

@@ -1,8 +1,19 @@
 
 require "remind"
 
-if ARGF.argv.length > 0
+if ARGF.argv[0]
+  puts "REMIND: #{ARGF.argv.join(' ')}"
   Remind.set ENV['USER'], ARGF.argv.join(" ")
+end
+
+a = Remind.get(ENV['USER'])
+
+#if ENV['REMIND'] == 'prompt'
+#puts %[#{a.length} reminders for #{ENV['USER']} on #{`hostname`.chomp} as of #{Time.now.strftime("%Y/%m/%d-%R")}]
+#end
+
+if ENV['REMIND'] == 'index'
+  a.each_with_index { |e,i| puts %[#{i + 1}\t|\t#{e}] }
 else
-  Remind.get(ENV['USER']).each_with_index { |e,i| puts %[#{i}\t|\t#{e}] }
+  a.each { |e| puts %[#{e}] }
 end
