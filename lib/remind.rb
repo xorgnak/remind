@@ -15,13 +15,23 @@ require_relative "remind/remind"
 require_relative "remind/calendar"
 
 require_relative "remind/event"
-
-# The Remind wrapper.
+#
+# THE Remind WRAPPER
+#
+# Allows maintence of multiple reminder sources as well as a collective reminder source
+# Provides multiple ways to create events.
+# ICAL BASE REMINDERS
+# Remind.url "https://mydomain.com/me.ics"
+# CREATE A WHAT/WHEN Event: used mainly to inject base reminder sets.
+# Remind.reminder what: "Sports ball vs. the other team.", when: "15 March 2024 AT 19:00"
+# CREATE A RAW Event: used mainly to inject events in real time from user input.
+# Remind.set "user", "Sports ball game vs. the other team March 15 2024 7pm."
+#
 module Remind
   # generic errors
   class Error < StandardError; end
 
-  @@REM = REM['reminders']
+  @@REM = REM['REM']
   
   @@INIT = []
   # Add system event.
@@ -45,12 +55,12 @@ module Remind
     @@REM.clear!
     
     [@@INIT].flatten.each do |x|
-      puts %[rebuild! x: #{x}]
+#      puts %[rebuild! x: #{x}]
       @@REM[x[:what]].attr = { date: x[:when] }
     end
     
     @@URL.each do |u|
-      puts %[rebuild! u: #{u}]
+#      puts %[rebuild! u: #{u}]
       CAL.from_url(u).each do |e|
         d = e.when[:begin].to_time.localtime.strftime("%Y/%m/%d-%R")
         h = { date: e.when[:begin].to_time.localtime.strftime("%-d %b %Y"), hour: e.when[:begin].to_time.localtime.strftime("%k"), minute: e.when[:begin].to_time.localtime.strftime("%M"), lead: 1 }
@@ -74,12 +84,20 @@ module Remind
     end
     REM[k].to_rem! append: true
   end
-
+  # alias for Remind.set
+  def self.[]= k,v
+    Remind.set(k, v)
+  end
+  
   # Get reminders container +k+                                                                                                                                                                                          
   # +h[:args]+ can be set to get other filters.
   #  Remind.get("collection")
   def self.get k, h={}
-    REM[k].get(h[:args] || '-t1')[1..-1]
+    [ @@REM.get(h[:args] || '-t1')[1..-1], REM[k].get(h[:args] || '-t1')[1..-1] ].flatten
+  end
+  # alias for Remind.get
+  def self.[] k
+    Remind.get(k)
   end
   # Get system reminders
   # Gets one week's agenda by default. 

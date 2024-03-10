@@ -6,10 +6,10 @@ module EVENT
     # Event +i+.
     def initialize i
       if @event = Nickel.parse(i)
-        puts %[EVENT event: #{@event}]
+#        puts %[EVENT event: #{@event}]
         @message = @event.message
       else
-        puts %[EVENT log]
+#        puts %[EVENT log]
         t = Time.now.utc
         @message = i
       end
@@ -28,9 +28,14 @@ module EVENT
         h = {
           message: @message,
           date: e.start_date.to_date.strftime("%-d %b %Y"),
-          hour: e.start_time.to_time.strftime("%k"),
-          minute: e.start_time.to_time.strftime("%M") 
         }
+        if e.start_time
+          h[:hour] = e.start_time.to_time.strftime("%k")
+          h[:minute] = e.start_time.to_time.strftime("%M")
+        else
+          h[:hour] = "00"
+          h[:minute] = "00"
+        end
         puts %[each message: #{h}]
         b.call(h, e)
       }

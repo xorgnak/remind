@@ -65,7 +65,7 @@ module REM
     def id; @id; end
     # Reminder event hash to reminder string.
     def to_rem
-      puts %[R[#{@id}] #{@attr}]
+#      puts %[R[#{@id}] #{@attr}]
       a, i = [], [ @id ]
       if @attr.has_key? :date
         a << %[#{@attr[:date]}]

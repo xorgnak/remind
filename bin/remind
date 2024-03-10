@@ -1,0 +1,8 @@
+
+require "remind"
+
+if ARGF.argv.length > 0
+  Remind.set ENV['USER'], ARGF.argv.join(" ")
+else
+  Remind.get(ENV['USER']).each_with_index { |e,i| puts %[#{i}\t|\t#{e}] }
+end

@@ -1,6 +1,10 @@
+#
 # Icalendar wrapper.
+#
+# Allows injection of ics calender events from either a remote server or file.
+# Meant to provide the backbone event source for local reminders.
+#
 module CAL
-
   # Calendar object.
   class C
     # Calendar +f+
